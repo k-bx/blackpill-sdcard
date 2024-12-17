@@ -1,1 +1,1 @@
-see [[blackpill-sdcard/README.md]]
+see [blackpill-sdcard/README.md](blackpill-sdcard/README.md)
