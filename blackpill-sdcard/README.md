@@ -5,7 +5,7 @@
 
 ## DEFMT
 
-- `Cargo.toml`: uncomment defmt-log feature
+- `Cargo.toml`: uncomment `defmt-log` feature and `default-features = false` in `[dependencies.embedded-sdmmc]`
 - `.cargo/config.toml`: uncomment `"-C", "link-arg=-Tdefmt.x",`
 - `src/main.rs`: uncomment until it compiles, comment out the `use cortex_m_semihosting::hprintln;`
 - run terminal 1: `export DEFMT_LOG=trace; cargo build --release && openocd | defmt-print -e target/thumbv7em-none-eabihf/release/blackpill-sdcard`

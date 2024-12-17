@@ -7,7 +7,7 @@ use panic_halt as _; // you can put a breakpoint on `rust_begin_unwind` to catch
                      // use panic_itm as _; // logs messages over ITM; requires ITM support
                      // use panic_semihosting as _; // logs messages to the host stderr; requires a debugger
 use cortex_m_rt::entry;
-// use defmt::{debug, error, info, trace, warn};
+// use defmt::{debug, error, info, trace, warn, println};
 // use defmt_semihosting as _;
 use cortex_m_semihosting::hprintln;
 use embedded_hal_nb::spi::MODE_0;
@@ -16,12 +16,24 @@ use stm32f4xx_hal::{pac, prelude::*, rcc};
 
 pub mod time;
 
+// comment for defmt
+
+macro_rules! trace {
+    ($($arg:tt)*) => {
+        hprintln!($($arg)*);
+    };
+}
 macro_rules! debug {
     ($($arg:tt)*) => {
         hprintln!($($arg)*);
     };
 }
 macro_rules! info {
+    ($($arg:tt)*) => {
+        hprintln!($($arg)*);
+    };
+}
+macro_rules! warn {
     ($($arg:tt)*) => {
         hprintln!($($arg)*);
     };
@@ -34,16 +46,16 @@ macro_rules! error {
 
 #[entry]
 fn main() -> ! {
-    // defmt::println!("STARTING [println]");
-    // error!("STARTING [error]");
-    // warn!("STARTING [warn]");
-    // info!("STARTING [info]");
-    // debug!("STARTING [debug]");
-    // trace!("STARTING [trace]");
+    // println!("STARTING [println]");
+    error!("STARTING [error]");
+    warn!("STARTING [warn]");
+    info!("STARTING [info]");
+    debug!("STARTING [debug]");
+    trace!("STARTING [trace]");
 
     let dp: pac::Peripherals = pac::Peripherals::take().unwrap();
-
     let _cp: cortex_m::peripheral::Peripherals = cortex_m::peripheral::Peripherals::take().unwrap();
+
     let rcc: rcc::Rcc = dp.RCC.constrain();
     let clocks: rcc::Clocks = rcc
         .cfgr
